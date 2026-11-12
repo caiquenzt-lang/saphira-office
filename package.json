@@ -1,0 +1,27 @@
+{
+  "name": "saphira-office",
+  "version": "1.0.0",
+  "description": "Animated virtual pixel art office for Hermes Desktop agents and profiles",
+  "main": "plugin.js",
+  "type": "module",
+  "author": "Antigravity & Caique",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caiquenzt-lang/saphira-office.git"
+  },
+  "keywords": [
+    "hermes",
+    "hermes-desktop",
+    "hermes-plugin",
+    "virtual-office",
+    "pixel-art",
+    "ai-agents"
+  ],
+  "imports": {
+    "@hermes/plugin-sdk": "./test/mock-sdk.js"
+  },
+  "scripts": {
+    "test": "node --loader ./test/loader.mjs test/test_plugin_contract.mjs && node --loader ./test/loader.mjs test/test_chat_mirror.mjs && node --loader ./test/loader.mjs test/test_pet_and_command_fixes.mjs"
+  }
+}

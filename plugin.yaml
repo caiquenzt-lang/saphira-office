@@ -1,0 +1,10 @@
+name: saphira-office
+version: "1.0.0"
+description: "Animated virtual pixel art office for Hermes Desktop agents and profiles."
+author: "Antigravity & Caique"
+manifest_version: 1
+kind: standalone
+provides_tools: []
+provides_hooks: []
+provides_middleware: []
+requires_env: []
