@@ -21,6 +21,7 @@
 - 🐾 **Petdex & Marketplace Integration:** Compatible with the official Hermes Pet system. Preview, download, and adopt custom pet avatars from the community catalog without leaving the office.
 - 🎨 **Modular Scene Customizer:** Change office wallpapers (Night Tech, Cyber Neon, Cozy Amber), desk colors, lighting fixtures, and decorative plants.
 - 📋 **Integrated Kanban Shortcut:** Click the wall TV screen to jump straight into Hermes Desktop's native Kanban board (`/kanban`).
+- 🌐 **Full Multi-Language Support (i18n):** Automatically follows Hermes Desktop language preferences (`display.language` / `ctx.i18n`) with complete English (`en`) and Brazilian Portuguese (`pt-BR`) dictionaries, plus an instant language switcher (`🌐 Auto | EN | PT`) on the top bar.
 - ⚡ **100% Self-Contained:** All pixel art sprites, furniture tiles, and animations are embedded. Zero external asset fetches, zero network tracking, works completely offline.
 
 ---
@@ -113,3 +114,30 @@ The test suite validates:
 This project is licensed under the [MIT License](./LICENSE).
 
 Pixel art assets and animations are inspired by retro game management aesthetics and designed for the open-source Hermes AI ecosystem.
+
+
+---
+
+## 🇧🇷 Documentação em Português
+
+### Sobre o Saphira Office
+O **Saphira Office** transforma o seu Hermes Desktop em um aconchegante escritório virtual em pixel art 16-bit. Seus perfis e agentes do Hermes são detectados automaticamente e alocados em mesas de trabalho, onde eles se movimentam, sentam, trabalham e reagem visualmente conforme processam pensamentos, executam ferramentas e concluem tarefas.
+
+### Principais Recursos
+- 🤖 **Descoberta Automática de Agentes:** Mapeia todos os seus perfis configurados sem necessidade de configuração manual.
+- 💬 **Chat Espelho Integrado:** Visualize o histórico oficial de mensagens, respostas e raciocínio de cada agente em uma janela flutuante.
+- 🗂️ **Seletor de Sessões:** Alterne entre diferentes conversas ou crie uma nova sessão de chat diretamente pela interface do escritório.
+- ⌨️ **Barra de Comandos:** Envie instruções para qualquer agente com seleção de modelo e esforço de raciocínio.
+- 🐾 **Marketplace Petdex:** Baixe e aplique novos avatares da comunidade oficial do Hermes com um clique.
+- 🎨 **Personalização de Cenário:** Troque mesas, cadeiras, papéis de parede e decorações.
+- 🌐 **Suporte Multilíngue (i18n):** Detecção automática do idioma do Hermes Desktop (`en` e `pt-BR`) com seletor manual rápido no topo (`🌐 Auto | EN | PT`).
+
+### Como Instalar no Hermes
+```bash
+hermes plugins install saphira-office
+```
+Ou clonando o repositório na pasta de plugins do Hermes Desktop:
+```bash
+cd %LOCALAPPDATA%\hermes\desktop-plugins
+git clone https://github.com/caiquenzt-lang/saphira-office.git
+```

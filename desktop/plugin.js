@@ -119,11 +119,180 @@ const WORKSTATION_POSITIONS = [
   { x: 725, y: 445, label: 'Posto 6' }
 ];
 
+// ── DICIONÁRIO MULTILÍNGUE (i18n) DO SAPHIRA OFFICE ──
+const I18N_DICTIONARY = {
+  en: {
+    appTitle: 'Saphira Office',
+    subtitle: '6 desks per room • Click desk to select',
+    kanbanLeft: '◀ Kanban: Left Wall',
+    kanbanRight: 'Kanban: Right Wall ▶',
+    motionSeated: 'Seated at Desks',
+    motionLight: 'Relaxed Walk',
+    motionFast: 'Fast Walk',
+    motionMenuTitle: 'Scene Behavior',
+    motionSeatedTitle: '🪑 Seated at Desks',
+    motionSeatedDesc: 'Characters fixed at their workstations',
+    motionLightTitle: '🚶 Relaxed Walk',
+    motionLightDesc: 'Occasional strolls around the office',
+    motionFastTitle: '🏃 Fast Walk',
+    motionFastDesc: 'Frequent office exploration',
+    marketplaceBtn: 'Petdex Marketplace',
+    customizeBtn: '🎨 Customize Office & Furniture',
+    statusAvailable: 'Available',
+    statusBusy: 'Busy',
+    statusRunning: 'Running',
+    activeBadge: 'Active',
+    installedBadge: 'Installed',
+    avatarBtn: '🎨 Avatar',
+    viewBtn: '👁 View',
+    responseBtn: '✉ Response',
+    chatBtn: '💬 Chat',
+    commandFor: 'Command for:',
+    modelLabel: 'Model:',
+    reasoningLabel: 'Reasoning:',
+    defaultOption: 'Default',
+    viewResponse: 'View Response',
+    newResponse: 'New Response',
+    sendBtn: 'Send',
+    sendingBtn: 'Sending...',
+    cmdPlaceholder: 'Type a command or instruction for {name} (Ctrl+Enter to send)...',
+    sendError: 'Error sending:',
+    chatInputPlaceholder: 'Command for {name} (Enter to send)...',
+    sessionsBtn: 'Sessions',
+    agentSessions: 'Sessions for {name}',
+    newSessionBtn: '+ New Session',
+    loadingSessions: '● Loading...',
+    noSessionsFound: 'No sessions found. Click "+ New Session" to start a new chat.',
+    syncingHistory: 'Syncing official session history in Hermes...',
+    chatEmpty: 'No messages in this session yet.',
+    hermesLink: 'Hermes',
+    closeChat: 'Close chat',
+    customizeTitle: '🎨 Customize Office & Furniture',
+    deskStyleLabel: 'Desks (Default: Blue Tech)',
+    chairStyleLabel: 'Chairs (Default: Office Chair)',
+    wallDecorLabel: 'Wall Decor',
+    plantStyleLabel: 'Plants & Greenery',
+    lightingStyleLabel: 'Lighting & Lamps',
+    carpetStyleLabel: 'Carpets & Floor',
+    saveBtn: 'Save Configuration',
+    cancelBtn: 'Cancel',
+    avatarCustomizerTitle: 'Station & Character Customizer',
+    avatarSelectionLabel: 'Choose Character (Catalog & Community Pets):',
+    scaleLabel: 'Scale / Size:',
+    offsetYLabel: 'Vertical Offset (Y):',
+    offsetXLabel: 'Horizontal Offset (X):',
+    downloadMorePets: '🛍️ Download More Characters (Petdex Marketplace)',
+    marketplaceTitle: '🛍️ Petdex Marketplace — Community Catalog',
+    marketplaceSubtitle: 'Download new characters for your virtual office with one click',
+    marketplaceSearchPlaceholder: 'Search characters by name or author...',
+    marketplaceSlugPlaceholder: 'Or enter community pet slug (e.g. frieren, cyber-cat)...',
+    downloadNowBtn: '⬇ Download Now',
+    useOnProfileBtn: '⚡ Use on Station',
+    reinstallBtn: '✓ Reinstall',
+    downloadPetBtn: '⬇ Download Pet',
+    loadingMarketplace: 'Loading community catalog from Petdex...',
+    cliNotice: 'Hermes CLI command: hermes pets install <slug>',
+    closeBtn: 'Close',
+    avatarSavedNotice: 'Avatar for {name} saved successfully!',
+    petAppliedNotice: '⚡ "{pet}" applied to the station of {name}!',
+    motionNoticeSeated: '🪑 Characters seated at their workstations.',
+    motionNoticeLight: '🚶 Characters in relaxed walking mode.',
+    motionNoticeFast: '🏃 Characters in active exploring mode.',
+    languageLabel: 'Language',
+    langAuto: 'Auto (Hermes)',
+    langEn: 'English',
+    langPt: 'Português'
+  },
+  'pt-BR': {
+    appTitle: 'Saphira Office',
+    subtitle: '6 postos por sala • Clique na mesa para selecionar',
+    kanbanLeft: '◀ Kanban: Parede Esquerda',
+    kanbanRight: 'Kanban: Parede Direita ▶',
+    motionSeated: 'Parados na Mesa',
+    motionLight: 'Movimento Leve',
+    motionFast: 'Movimento Rápido',
+    motionMenuTitle: 'Comportamento na Cena',
+    motionSeatedTitle: '🪑 Parados na Mesa',
+    motionSeatedDesc: 'Personagens parados em seus postos de trabalho',
+    motionLightTitle: '🚶 Movimentação Leve',
+    motionLightDesc: 'Caminhadas ocasionais pelo escritório',
+    motionFastTitle: '🏃 Movimentação Rápida',
+    motionFastDesc: 'Exploração frequente do piso',
+    marketplaceBtn: 'Marketplace Petdex',
+    customizeBtn: '🎨 Personalizar Cenário & Móveis',
+    statusAvailable: 'Disponível',
+    statusBusy: 'Ocupado',
+    statusRunning: 'Executando',
+    activeBadge: 'Ativa',
+    installedBadge: 'Instalado',
+    avatarBtn: '🎨 Avatar',
+    viewBtn: '👁 Ver',
+    responseBtn: '✉ Resposta',
+    chatBtn: '💬 Chat',
+    commandFor: 'Comando para:',
+    modelLabel: 'Modelo:',
+    reasoningLabel: 'Raciocínio:',
+    defaultOption: 'Padrão',
+    viewResponse: 'Ver Resposta',
+    newResponse: 'Nova Resposta',
+    sendBtn: 'Enviar',
+    sendingBtn: 'Enviando...',
+    cmdPlaceholder: 'Digite um comando ou instrução para {name} (Ctrl+Enter para enviar)...',
+    sendError: 'Erro ao enviar:',
+    chatInputPlaceholder: 'Comando para {name} (Enter para enviar)...',
+    sessionsBtn: 'Sessões',
+    agentSessions: 'Sessões de {name}',
+    newSessionBtn: '+ Nova Sessão',
+    loadingSessions: '● Carregando...',
+    noSessionsFound: 'Nenhuma sessão encontrada. Inicie uma nova conversa clicando em "+ Nova Sessão".',
+    syncingHistory: 'Sincronizando histórico oficial da sessão no Hermes...',
+    chatEmpty: 'Nenhuma mensagem nesta sessão ainda.',
+    hermesLink: 'Hermes',
+    closeChat: 'Fechar chat',
+    customizeTitle: '🎨 Personalizar Cenário & Móveis',
+    deskStyleLabel: 'Mesas (Padrão: Tech Azul)',
+    chairStyleLabel: 'Cadeiras (Padrão: Escritório)',
+    wallDecorLabel: 'Decoração de Parede',
+    plantStyleLabel: 'Plantas & Vasos',
+    lightingStyleLabel: 'Iluminação & Luminárias',
+    carpetStyleLabel: 'Tapetes & Piso',
+    saveBtn: 'Salvar Configuração',
+    cancelBtn: 'Cancelar',
+    avatarCustomizerTitle: 'Personalização de Posto & Personagem',
+    avatarSelectionLabel: 'Escolha o Personagem (Catálogo & Pets Comunitários):',
+    scaleLabel: 'Escala / Tamanho:',
+    offsetYLabel: 'Ajuste Vertical (Y):',
+    offsetXLabel: 'Ajuste Horizontal (X):',
+    downloadMorePets: '🛍️ Baixar Mais Personagens (Marketplace Petdex)',
+    marketplaceTitle: '🛍️ Marketplace Petdex — Catálogo da Comunidade Hermes',
+    marketplaceSubtitle: 'Baixe novos personagens para o seu escritório virtual com um clique',
+    marketplaceSearchPlaceholder: 'Buscar personagens por nome ou autor...',
+    marketplaceSlugPlaceholder: 'Ou digite o slug do pet comunitário (ex: frieren, cyber-cat)...',
+    downloadNowBtn: '⬇ Baixar Agora',
+    useOnProfileBtn: '⚡ Usar no Perfil',
+    reinstallBtn: '✓ Rebaixar',
+    downloadPetBtn: '⬇ Baixar Pet',
+    loadingMarketplace: 'Carregando catálogo comunitário do Petdex...',
+    cliNotice: 'Comando CLI oficial: hermes pets install <slug>',
+    closeBtn: 'Fechar',
+    avatarSavedNotice: 'Avatar de {name} salvo com sucesso!',
+    petAppliedNotice: '⚡ "{pet}" aplicado à estação de {name}!',
+    motionNoticeSeated: '🪑 Personagens parados em seus postos de trabalho.',
+    motionNoticeLight: '🚶 Personagens em modo de movimentação leve.',
+    motionNoticeFast: '🏃 Personagens em modo de exploração ativa.',
+    languageLabel: 'Idioma',
+    langAuto: 'Auto (Hermes)',
+    langEn: 'English',
+    langPt: 'Português'
+  }
+};
+
+
 export default {
   id: 'saphira-office',
   name: 'Saphira Office',
   description: 'Plugin nativo de escritório virtual interativo para Hermes Desktop.',
-  version: '0.4.1',
+  version: '1.0.1',
   defaultEnabled: true,
 
   register(ctx) {
@@ -138,6 +307,15 @@ export default {
         try { localStorage.setItem('saphira_office_' + k, JSON.stringify(v)); } catch {}
       }
     };
+
+    try {
+      if (ctx.i18n && typeof ctx.i18n.register === 'function') {
+        ctx.i18n.register({
+          'en': I18N_DICTIONARY['en'],
+          'pt-BR': I18N_DICTIONARY['pt-BR']
+        });
+      }
+    } catch {}
 
     const imageCache = new Map();
     const thumbnailMemoryCache = new Map();
@@ -496,6 +674,43 @@ export default {
     // Componente Principal
     function SaphiraOfficeView() {
       const canvasRef = useRef(null);
+
+      // ── ESTADOS E RESOLUÇÃO DE IDIOMA (i18n) ──
+      const [selectedLanguage, setSelectedLanguage] = useState(() => storage.get('ui_language', 'auto'));
+      const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+
+      function resolveEffectiveLocale() {
+        if (selectedLanguage && selectedLanguage !== 'auto') return selectedLanguage;
+        if (typeof window !== 'undefined') {
+          try {
+            const stored = localStorage.getItem('hermes.display.language') ||
+                           localStorage.getItem('display.language') ||
+                           localStorage.getItem('language');
+            if (stored) {
+              if (stored.startsWith('pt') || stored === 'pt-BR') return 'pt-BR';
+              if (stored.startsWith('en')) return 'en';
+            }
+          } catch {}
+          try {
+            if (navigator && navigator.language) {
+              if (navigator.language.startsWith('pt')) return 'pt-BR';
+              if (navigator.language.startsWith('en')) return 'en';
+            }
+          } catch {}
+        }
+        return 'en';
+      }
+
+      const currentLocale = resolveEffectiveLocale();
+      const t = (key, params = {}) => {
+        let str = I18N_DICTIONARY[currentLocale]?.[key] || I18N_DICTIONARY['en']?.[key] || key;
+        if (params && typeof params === 'object') {
+          for (const [k, v] of Object.entries(params)) {
+            str = str.replace(new RegExp('\\{' + k + '\\}', 'g'), v);
+          }
+        }
+        return str;
+      };
 
       // Perfis Reais (com fallback universal caso a API do Hermes ainda esteja inicializando)
       const [profilesList, setProfilesList] = useState([
@@ -992,7 +1207,7 @@ export default {
         setProfileAvatars(updated);
         storage.set('profile_avatars', updated);
         setIsCustomizing(false);
-        setActionNotice({ text: `Avatar de ${selectedProfile.displayName} salvo com sucesso!`, type: 'success' });
+        setActionNotice({ text: t('avatarSavedNotice', { name: selectedProfile.displayName }), type: 'success' });
         setTimeout(() => setActionNotice(null), 3000);
       };
 
@@ -1019,9 +1234,9 @@ export default {
         const generalBusy = host?.state?.busy?.get ? host.state.busy.get() : false;
 
         if (busySession || (generalBusy && profileId === selectedProfileId)) {
-          return { key: 'executando', label: 'Executando', color: '#06b6d4', dot: '●' };
+          return { key: 'executando', label: t('statusRunning'), color: '#06b6d4', dot: '●' };
         }
-        return { key: 'disponivel', label: 'Disponível', color: '#10b981', dot: '●' };
+        return { key: 'disponivel', label: t('statusAvailable'), color: '#10b981', dot: '●' };
       };
 
       // Roteamento Estrito para a conversa do perfil
@@ -2039,7 +2254,7 @@ export default {
                   jsxs('div', {
                     children: [
                       jsx('h2', { style: { margin: 0, fontSize: '15px', fontWeight: 'bold', color: '#ffffff' }, children: 'Saphira Office' }),
-                      jsx('p', { style: { margin: 0, fontSize: '11px', color: '#94a3b8' }, children: '6 postos por sala • Clique na mesa para selecionar' })
+                      jsx('p', { style: { margin: 0, fontSize: '11px', color: '#94a3b8' }, children: t('subtitle') })
                     ]
                   }),
                   totalRooms > 1 && jsxs('div', {
@@ -2089,7 +2304,7 @@ export default {
                     },
                     children: [
                       jsx('span', { children: '📋' }),
-                      jsx('span', { children: kanbanCurrentSide === 'left' ? '◀ Kanban: Parede Esquerda' : 'Kanban: Parede Direita ▶' })
+                      jsx('span', { children: kanbanCurrentSide === 'left' ? t('kanbanLeft') : t('kanbanRight') })
                     ]
                   }),
 
@@ -2121,7 +2336,7 @@ export default {
                         children: [
                           jsx('span', { children: motionMode === 'parados' ? '🪑' : (motionMode === 'leve' ? '🚶' : '🏃') }),
                           jsx('span', {
-                            children: motionMode === 'parados' ? 'Parados na Mesa' : (motionMode === 'leve' ? 'Movimento Leve' : 'Movimento Rápido')
+                            children: motionMode === 'parados' ? t('motionSeated') : (motionMode === 'leve' ? t('motionLight') : t('motionFast'))
                           }),
                           jsx('span', { style: { fontSize: '9px', opacity: 0.7 }, children: isMotionMenuOpen ? '▲' : '▼' })
                         ]
@@ -2148,7 +2363,7 @@ export default {
                         children: [
                           jsx('div', {
                             style: { padding: '4px 8px', fontSize: '9.5px', color: '#64748b', fontWeight: 'bold', textTransform: 'uppercase' },
-                            children: 'Comportamento na Cena'
+                            children: t('motionMenuTitle')
                           }),
                           // Opção 1: Parados
                           jsxs('div', {
@@ -2156,7 +2371,7 @@ export default {
                               setMotionMode('parados');
                               storage.set('motion_mode', 'parados');
                               setIsMotionMenuOpen(false);
-                              setActionNotice({ text: '🪑 Personagens parados em seus postos de trabalho.', type: 'info' });
+                              setActionNotice({ text: t('motionNoticeSeated'), type: 'info' });
                               setTimeout(() => setActionNotice(null), 3000);
                             },
                             style: {
@@ -2175,7 +2390,7 @@ export default {
                               jsxs('div', {
                                 style: { display: 'flex', flexDirection: 'column', gap: '2px' },
                                 children: [
-                                  jsx('span', { style: { fontWeight: '600' }, children: '🪑 Parados na Mesa' }),
+                                  jsx('span', { style: { fontWeight: '600' }, children: t('motionSeatedTitle') }),
                                   jsx('span', { style: { fontSize: '9.5px', color: '#94a3b8' }, children: 'Todos focados no posto' })
                                 ]
                               }),
@@ -2207,7 +2422,7 @@ export default {
                               jsxs('div', {
                                 style: { display: 'flex', flexDirection: 'column', gap: '2px' },
                                 children: [
-                                  jsx('span', { style: { fontWeight: '600' }, children: '🚶 Movimentação Leve' }),
+                                  jsx('span', { style: { fontWeight: '600' }, children: t('motionLightTitle') }),
                                   jsx('span', { style: { fontSize: '9.5px', color: '#94a3b8' }, children: 'Calma, mais tempo na mesa' })
                                 ]
                               }),
@@ -2239,8 +2454,8 @@ export default {
                               jsxs('div', {
                                 style: { display: 'flex', flexDirection: 'column', gap: '2px' },
                                 children: [
-                                  jsx('span', { style: { fontWeight: '600' }, children: '🏃 Movimentação Rápida' }),
-                                  jsx('span', { style: { fontSize: '9.5px', color: '#94a3b8' }, children: 'Exploração frequente do piso' })
+                                  jsx('span', { style: { fontWeight: '600' }, children: t('motionFastTitle') }),
+                                  jsx('span', { style: { fontSize: '9.5px', color: '#94a3b8' }, children: t('motionFastDesc') })
                                 ]
                               }),
                               motionMode === 'rapida' && jsx('span', { style: { color: '#38bdf8', fontWeight: 'bold' }, children: '✓' })
@@ -2274,7 +2489,7 @@ export default {
                     },
                     children: [
                       jsx('span', { children: '🛍️' }),
-                      jsx('span', { children: 'Marketplace Petdex' })
+                      jsx('span', { children: t('marketplaceBtn') })
                     ]
                   }),
 
@@ -2295,7 +2510,86 @@ export default {
                       alignItems: 'center',
                       gap: '5px'
                     },
-                    children: '🎨 Personalizar Cenário & Móveis'
+                    children: t('customizeBtn')
+                  }),
+
+                  /* BOTÃO SELETOR DE IDIOMA (i18n) */
+                  jsxs('div', {
+                    style: { position: 'relative' },
+                    children: [
+                      jsxs('button', {
+                        type: 'button',
+                        onClick: (e) => {
+                          e.stopPropagation();
+                          setIsLangMenuOpen(prev => !prev);
+                        },
+                        style: {
+                          padding: '7px 11px',
+                          borderRadius: '8px',
+                          border: '1px solid #334155',
+                          backgroundColor: '#0f172a',
+                          color: '#cbd5e1',
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '5px',
+                          boxShadow: isLangMenuOpen ? '0 0 10px rgba(56, 189, 248, 0.3)' : 'none',
+                          transition: 'all 0.15s ease'
+                        },
+                        children: [
+                          jsx('span', { children: '🌐' }),
+                          jsx('span', { children: selectedLanguage === 'auto' ? ('Auto (' + (currentLocale === 'pt-BR' ? 'PT' : 'EN') + ')') : (selectedLanguage === 'pt-BR' ? 'PT' : 'EN') }),
+                          jsx('span', { style: { fontSize: '8px', opacity: 0.7 }, children: isLangMenuOpen ? '▲' : '▼' })
+                        ]
+                      }),
+                      isLangMenuOpen && jsxs('div', {
+                        onClick: (e) => e.stopPropagation(),
+                        style: {
+                          position: 'absolute',
+                          top: '115%',
+                          right: 0,
+                          width: '150px',
+                          backgroundColor: '#0d1326',
+                          border: '1px solid #2b3b64',
+                          borderRadius: '8px',
+                          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.75)',
+                          zIndex: 70,
+                          padding: '4px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '2px'
+                        },
+                        children: [
+                          { code: 'auto', label: t('langAuto') },
+                          { code: 'en', label: t('langEn') },
+                          { code: 'pt-BR', label: t('langPt') }
+                        ].map(item => jsxs('div', {
+                          key: item.code,
+                          onClick: () => {
+                            setSelectedLanguage(item.code);
+                            storage.set('ui_language', item.code);
+                            setIsLangMenuOpen(false);
+                          },
+                          style: {
+                            padding: '6px 10px',
+                            borderRadius: '5px',
+                            backgroundColor: selectedLanguage === item.code ? '#1e294b' : 'transparent',
+                            color: selectedLanguage === item.code ? '#38bdf8' : '#e2e8f0',
+                            fontSize: '11px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between'
+                          },
+                          children: [
+                            jsx('span', { children: item.label }),
+                            selectedLanguage === item.code && jsx('span', { style: { fontWeight: 'bold' }, children: '✓' })
+                          ]
+                        }))
+                      })
+                    ]
                   })
                 ]
               })
@@ -2437,7 +2731,7 @@ export default {
                           fontWeight: '600',
                           cursor: 'pointer'
                         },
-                        children: '🎨 Avatar'
+                        children: t('avatarBtn')
                       }),
                       jsx('button', {
                         type: 'button',
@@ -2461,7 +2755,7 @@ export default {
                           fontWeight: 'bold',
                           cursor: 'pointer'
                         },
-                        children: unreadResponses[profile.id] ? '✉ Resposta' : '👁 Ver'
+                        children: unreadResponses[profile.id] ? t('responseBtn') : t('viewBtn')
                       }),
                       jsx('button', {
                         type: 'button',
@@ -2486,7 +2780,7 @@ export default {
                           fontWeight: 'bold',
                           cursor: 'pointer'
                         },
-                        children: '💬 Chat'
+                        children: t('chatBtn')
                       })
                     ]
                   })
@@ -2533,7 +2827,7 @@ export default {
                       }),
                       jsx('span', {
                         style: { fontSize: '11px', color: '#94a3b8' },
-                        children: 'Comando para:'
+                        children: t('commandFor')
                       }),
                       jsx('span', {
                         style: {
@@ -2602,7 +2896,7 @@ export default {
                               cursor: 'pointer'
                             },
                             children: [
-                              jsx('option', { value: 'default', children: 'Padrão' }),
+                              jsx('option', { value: 'default', children: t('defaultOption') }),
                               jsx('option', { value: 'low', children: 'Baixo' }),
                               jsx('option', { value: 'medium', children: 'Médio' }),
                               jsx('option', { value: 'high', children: 'Alto' }),
@@ -2639,7 +2933,7 @@ export default {
                         },
                         children: [
                           jsx('span', { children: unreadResponses[selectedProfileId] ? '✉' : '👁' }),
-                          unreadResponses[selectedProfileId] ? 'Nova Resposta' : 'Ver Resposta'
+                          unreadResponses[selectedProfileId] ? t('newResponse') : t('viewResponse')
                         ]
                       })
                     ]
@@ -2701,7 +2995,7 @@ export default {
                     },
                     children: [
                       jsx('span', { children: '➤' }),
-                      sendingStatus.state === 'sending' ? 'Enviando...' : 'Enviar'
+                      sendingStatus.state === 'sending' ? t('sendingBtn') : t('sendBtn')
                     ]
                   })
                 ]
@@ -2767,7 +3061,7 @@ export default {
                   children: [
                     jsxs('div', {
                       children: [
-                        jsx('h3', { style: { margin: 0, color: '#ffffff', fontSize: '15px', fontWeight: 'bold' }, children: '🎨 Personalizar Cenário & Móveis' }),
+                        jsx('h3', { style: { margin: 0, color: '#ffffff', fontSize: '15px', fontWeight: 'bold' }, children: t('customizeTitle') }),
                         jsx('p', { style: { margin: '2px 0 0 0', color: '#94a3b8', fontSize: '11px' }, children: 'Alterne os estilos mantendo o posicionamento e orientação corretos no piso' })
                       ]
                     }),
@@ -2903,7 +3197,7 @@ export default {
                       { id: 'floorSlotLeft', label: 'Armário Esquerdo (Encostado no Chão)' },
                       { id: 'floorSlotRight', label: 'Armário Direito (Invertido p/ Sala)' }
                     ] : activeEditorTab === 'mesas_cadeiras' ? [
-                      { id: 'chairStyleId', label: 'Cadeiras (Padrão: Escritório)' },
+                      { id: 'chairStyleId', label: t('chairStyleLabel') },
                       { id: 'deskStyleId', label: 'Estilo das Mesas' }
                     ] : activeEditorTab === 'plantas' ? [
                       { id: 'plantSlotLeft', label: 'Canto Esquerdo' },
@@ -3200,7 +3494,7 @@ export default {
                             gap: '6px',
                             boxShadow: '0 4px 12px rgba(99, 102, 241, 0.35)'
                           },
-                          children: '🛍️ Baixar Mais Personagens (Marketplace Petdex)'
+                          children: t('downloadMorePets')
                         }),
 
                         // Pets Locais
@@ -3281,7 +3575,7 @@ export default {
                             jsxs('div', {
                               style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
                               children: [
-                                jsx('span', { style: { fontSize: '11px', color: '#94a3b8' }, children: 'Ajuste Vertical (Y):' }),
+                                jsx('span', { style: { fontSize: '11px', color: '#94a3b8' }, children: t('offsetYLabel') }),
                                 jsx('span', { style: { fontSize: '11px', color: '#ffffff', fontFamily: 'monospace' }, children: `${customOffsetY}px` })
                               ]
                             }),
@@ -3323,7 +3617,7 @@ export default {
                         fontSize: '12px',
                         cursor: 'pointer'
                       },
-                      children: 'Cancelar'
+                      children: t('cancelBtn')
                     }),
                     jsx('button', {
                       type: 'button',
@@ -3338,7 +3632,7 @@ export default {
                         fontWeight: 'bold',
                         cursor: 'pointer'
                       },
-                      children: 'Salvar Configuração'
+                      children: t('saveBtn')
                     })
                   ]
                 })
@@ -3390,7 +3684,7 @@ export default {
                         jsxs('div', {
                           children: [
                             jsx('h3', { style: { margin: 0, color: '#ffffff', fontSize: '15px', fontWeight: 'bold' }, children: 'Marketplace Petdex — Catálogo da Comunidade Hermes' }),
-                            jsx('p', { style: { margin: '2px 0 0 0', color: '#a5b4fc', fontSize: '11px' }, children: 'Baixe novos personagens para o seu escritório virtual com um clique' })
+                            jsx('p', { style: { margin: '2px 0 0 0', color: '#a5b4fc', fontSize: '11px' }, children: t('marketplaceSubtitle') })
                           ]
                         })
                       ]
@@ -3427,7 +3721,7 @@ export default {
                       children: [
                         jsx('input', {
                           type: 'text',
-                          placeholder: 'Ou digite o slug do pet comunitário (ex: frieren, cyber-cat)...',
+                          placeholder: t('marketplaceSlugPlaceholder'),
                           value: manualSlugInput,
                           onChange: (e) => setManualSlugInput(e.target.value),
                           style: {
@@ -3457,7 +3751,7 @@ export default {
                             fontSize: '11px',
                             cursor: manualSlugInput.trim() ? 'pointer' : 'default'
                           },
-                          children: '⬇ Baixar Agora'
+                          children: t('downloadNowBtn')
                         })
                       ]
                     })
@@ -3478,7 +3772,7 @@ export default {
                   children: isMarketplaceLoading ? (
                     jsx('div', {
                       style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '140px', color: '#94a3b8', fontSize: '13px' },
-                      children: 'Carregando catálogo comunitário do Petdex...'
+                      children: t('loadingMarketplace')
                     })
                   ) : (
                     marketplacePets
@@ -3545,7 +3839,7 @@ export default {
                                       fontWeight: 'bold',
                                       cursor: 'pointer'
                                     },
-                                    children: '⚡ Usar no Perfil'
+                                    children: t('useOnProfileBtn')
                                   })
                                 ) : null,
                                 jsx('button', {
@@ -3583,7 +3877,7 @@ export default {
                     justifyContent: 'space-between'
                   },
                   children: [
-                    jsx('span', { style: { fontSize: '10px', color: '#64748b' }, children: 'Comando CLI oficial: hermes pets install <slug>' }),
+                    jsx('span', { style: { fontSize: '10px', color: '#64748b' }, children: t('cliNotice') }),
                     jsx('button', {
                       type: 'button',
                       onClick: () => setIsMarketplaceOpen(false),
@@ -3596,7 +3890,7 @@ export default {
                         fontSize: '11px',
                         cursor: 'pointer'
                       },
-                      children: 'Fechar'
+                      children: t('closeBtn')
                     })
                   ]
                 })
@@ -3719,7 +4013,7 @@ export default {
                               },
                               children: [
                                 jsx('span', { style: { fontSize: '12px' }, children: '🗂️' }),
-                                jsx('span', { children: 'Sessões' }),
+                                jsx('span', { children: t('sessionsBtn') }),
                                 jsx('span', { style: { fontSize: '8px', opacity: 0.8 }, children: isSessionDrawerOpen ? '▲' : '▼' })
                               ]
                             }),
@@ -3745,7 +4039,7 @@ export default {
                               },
                               children: [
                                 jsx('span', { children: '🔗' }),
-                                jsx('span', { children: 'Hermes' })
+                                jsx('span', { children: t('hermesLink') })
                               ]
                             }),
                             jsx('button', {
@@ -3794,7 +4088,7 @@ export default {
                               style: { display: 'flex', alignItems: 'center', gap: '6px' },
                               children: [
                                 jsx('span', { style: { fontSize: '11px', fontWeight: 'bold', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px' }, children: 'Sessões de ' + mirrorProf.displayName }),
-                                isSessionsLoading ? jsx('span', { style: { fontSize: '10px', color: '#38bdf8' }, children: '● Carregando...' }) : null
+                                isSessionsLoading ? jsx('span', { style: { fontSize: '10px', color: '#38bdf8' }, children: t('loadingSessions') }) : null
                               ]
                             }),
                             jsx('button', {
@@ -3817,7 +4111,7 @@ export default {
                               },
                               children: [
                                 jsx('span', { children: '＋' }),
-                                jsx('span', { children: 'Nova Sessão' })
+                                jsx('span', { children: t('newSessionBtn') })
                               ]
                             })
                           ]
@@ -3834,7 +4128,7 @@ export default {
                           children: [
                             profileSessions.length === 0 && !isSessionsLoading ? jsx('div', {
                               style: { fontSize: '11.5px', color: '#64748b', textAlign: 'center', padding: '14px 0' },
-                              children: 'Nenhuma sessão encontrada. Inicie uma nova conversa clicando em "+ Nova Sessão".'
+                              children: t('noSessionsFound')
                             }) : null,
                             ...profileSessions.map((s) => {
                               const sid = s.resolved_id || s.id;
@@ -3913,7 +4207,7 @@ export default {
                 children: [
                   isMirrorLoading && chatMirrorMessages.length === 0 ? jsx('div', {
                     style: { textAlign: 'center', color: '#64748b', fontSize: '12px', padding: '24px 0' },
-                    children: 'Sincronizando histórico oficial da sessão no Hermes...'
+                    children: t('syncingHistory')
                   }) : null,
 
                   chatMirrorMessages.length === 0 && !isMirrorLoading ? jsxs('div', {
@@ -4026,7 +4320,7 @@ export default {
                       type: 'text',
                       value: popupComposerText,
                       onChange: (e) => setPopupComposerText(e.target.value),
-                      placeholder: `Comando para ${curProfile.displayName} (Enter para enviar)...`,
+                      placeholder: t('chatInputPlaceholder', { name: curProfile.displayName || curProfile.shortName }),
                       disabled: sendingStatus.state === 'sending',
                       style: {
                         flex: 1,
@@ -4056,7 +4350,7 @@ export default {
                         boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
                         whiteSpace: 'nowrap'
                       },
-                      children: '➤ Enviar'
+                      children: '➤ ' + t('sendBtn')
                     })
                   ]
                 });

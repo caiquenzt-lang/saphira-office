@@ -1,6 +1,6 @@
 {
   "name": "saphira-office",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Animated virtual pixel art office for Hermes Desktop agents and profiles",
   "main": "plugin.js",
   "type": "module",
@@ -16,12 +16,13 @@
     "hermes-plugin",
     "virtual-office",
     "pixel-art",
-    "ai-agents"
+    "ai-agents",
+    "i18n"
   ],
   "imports": {
     "@hermes/plugin-sdk": "./test/mock-sdk.js"
   },
   "scripts": {
-    "test": "node --loader ./test/loader.mjs test/test_plugin_contract.mjs && node --loader ./test/loader.mjs test/test_chat_mirror.mjs && node --loader ./test/loader.mjs test/test_pet_and_command_fixes.mjs"
+    "test": "node --loader ./test/loader.mjs test/test_plugin_contract.mjs && node --loader ./test/loader.mjs test/test_chat_mirror.mjs && node --loader ./test/loader.mjs test/test_pet_and_command_fixes.mjs && node --loader ./test/loader.mjs test/test_i18n.mjs"
   }
 }
