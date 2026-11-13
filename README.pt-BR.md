@@ -21,7 +21,7 @@ O **Saphira Office** transforma o seu [Hermes Desktop](https://hermes-agent.nous
 - 🐾 **Integração com Petdex e Marketplace:** Compatível com o sistema oficial de Pets do Hermes. Visualize miniaturas, baixe e adote avatares da comunidade instantaneamente.
 - 🎨 **Personalização de Cenário e Móveis:** Escolha entre papéis de parede (Night Tech, Cyber Neon, Cozy Amber), estilos de mesa, iluminação e decorações.
 - 📋 **Atalho para o Kanban Nativo:** Clique na televisão da parede para acessar diretamente o quadro Kanban integrado do Hermes Desktop (`/kanban`).
-- ⚡ **100% Autossuficiente e Seguro:** Todos os sprites e animações estão embutidos. Zero conexões externas desnecessárias, seguro e funciona completamente offline.
+- ⚡ **Recursos Visuais Embutidos & Petdex Opcional:** Todos os papéis de parede, móveis e sprites base de personagens são 100% embutidos e funcionam offline sem rastreamento. Quando aberto pelo usuário, o modal opcional do Marketplace Petdex conecta ao catálogo comunitário em petdex.dev para permitir descobrir e baixar novos pets.
 
 ---
 

@@ -22,7 +22,7 @@
 - 🎨 **Modular Scene Customizer:** Change office wallpapers (Night Tech, Cyber Neon, Cozy Amber), desk colors, lighting fixtures, and decorative plants.
 - 📋 **Integrated Kanban Shortcut:** Click the wall TV screen to jump straight into Hermes Desktop's native Kanban board (`/kanban`).
 - 🌐 **Full Multi-Language Support (i18n):** Automatically follows Hermes Desktop language preferences (`display.language` / `ctx.i18n`) with complete English (`en`) and Brazilian Portuguese (`pt-BR`) dictionaries, plus an instant language switcher (`🌐 Auto | EN | PT`) on the top bar.
-- ⚡ **100% Self-Contained:** All pixel art sprites, furniture tiles, and animations are embedded. Zero external asset fetches, zero network tracking, works completely offline.
+- ⚡ **Embedded Core Assets & Optional Petdex:** All default office backgrounds, furniture tiles, and built-in agent sprites are 100% embedded and functional offline without tracking. When opened, the optional Petdex Marketplace modal queries the community catalog at petdex.dev to let you discover and install optional community character sprites.
 
 ---
 

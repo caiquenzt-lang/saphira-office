@@ -123,6 +123,13 @@ const WORKSTATION_POSITIONS = [
 const I18N_DICTIONARY = {
   en: {
     appTitle: 'Saphira Office',
+    paletteLabel: 'Open Saphira Office',
+    liveSessions: 'Live Sessions',
+    processingStatus: '{name} is processing in Hermes...',
+    responseReceivedStatus: 'Response received from {name}! ✔',
+    primaryAssistant: 'Primary Assistant',
+    defaultPrompt: 'Hello! How does the virtual office work?',
+    defaultResponse: 'Hello! Saphira Office automatically discovers all profiles and agents configured in your Hermes Desktop, allowing you to interact, monitor status, and manage tasks directly in this animated workspace.',
     subtitle: '6 desks per room • Click desk to select',
     kanbanLeft: '◀ Kanban: Left Wall',
     kanbanRight: 'Kanban: Right Wall ▶',
@@ -205,6 +212,13 @@ const I18N_DICTIONARY = {
   },
   'pt-BR': {
     appTitle: 'Saphira Office',
+    paletteLabel: 'Abrir Saphira Office',
+    liveSessions: 'Sessões Reais',
+    processingStatus: '{name} está processando no Hermes...',
+    responseReceivedStatus: 'Resposta recebida de {name}! ✔',
+    primaryAssistant: 'Assistente Principal',
+    defaultPrompt: 'Olá! Como funciona o escritório virtual?',
+    defaultResponse: 'Olá! O Saphira Office detecta automaticamente todos os perfis e agentes configurados no seu Hermes Desktop, permitindo interagir, acompanhar status e gerenciar tarefas diretamente nesta interface animada.',
     subtitle: '6 postos por sala • Clique na mesa para selecionar',
     kanbanLeft: '◀ Kanban: Parede Esquerda',
     kanbanRight: 'Kanban: Parede Direita ▶',
@@ -291,8 +305,8 @@ const I18N_DICTIONARY = {
 export default {
   id: 'saphira-office',
   name: 'Saphira Office',
-  description: 'Plugin nativo de escritório virtual interativo para Hermes Desktop.',
-  version: '1.0.1',
+  description: 'Interactive virtual pixel art office for Hermes Desktop agents and profiles.',
+  version: '1.0.2',
   defaultEnabled: true,
 
   register(ctx) {
@@ -666,7 +680,7 @@ export default {
       ctx.fillText('Roteamento OK', cardX3 + 5, colY + 24);
       ctx.fillStyle = '#6ee7b7';
       ctx.font = '6.5px sans-serif';
-      ctx.fillText('Sessões Reais', cardX3 + 5, colY + 33);
+      ctx.fillText(t('liveSessions'), cardX3 + 5, colY + 33);
 
       ctx.restore();
     }
@@ -679,26 +693,34 @@ export default {
       const [selectedLanguage, setSelectedLanguage] = useState(() => storage.get('ui_language', 'auto'));
       const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
-      function resolveEffectiveLocale() {
-        if (selectedLanguage && selectedLanguage !== 'auto') return selectedLanguage;
-        if (typeof window !== 'undefined') {
-          try {
-            const stored = localStorage.getItem('hermes.display.language') ||
-                           localStorage.getItem('display.language') ||
-                           localStorage.getItem('language');
-            if (stored) {
-              if (stored.startsWith('pt') || stored === 'pt-BR') return 'pt-BR';
-              if (stored.startsWith('en')) return 'en';
-            }
-          } catch {}
-          try {
-            if (navigator && navigator.language) {
-              if (navigator.language.startsWith('pt')) return 'pt-BR';
-              if (navigator.language.startsWith('en')) return 'en';
-            }
-          } catch {}
+      // Resolução oficial via ctx.i18n (onLocaleChange / getLocale / locale) com inglês por padrão
+      const [hermesLocale, setHermesLocale] = useState(() => {
+        try {
+          if (ctx.i18n?.locale) return ctx.i18n.locale;
+          if (typeof ctx.i18n?.getLocale === 'function') return ctx.i18n.getLocale();
+        } catch {}
+        if (typeof navigator !== 'undefined' && navigator.language) {
+          return navigator.language;
         }
         return 'en';
+      });
+
+      useEffect(() => {
+        if (typeof ctx.i18n?.onLocaleChange === 'function') {
+          const unsub = ctx.i18n.onLocaleChange((newLoc) => {
+            if (newLoc) setHermesLocale(newLoc);
+          });
+          return () => {
+            if (typeof unsub === 'function') unsub();
+          };
+        }
+      }, []);
+
+      function resolveEffectiveLocale() {
+        if (selectedLanguage && selectedLanguage !== 'auto') return selectedLanguage;
+        const loc = (hermesLocale || '').toLowerCase();
+        if (loc.startsWith('pt') || loc === 'pt-br') return 'pt-BR';
+        return 'en'; // English as default
       }
 
       const currentLocale = resolveEffectiveLocale();
@@ -714,7 +736,7 @@ export default {
 
       // Perfis Reais (com fallback universal caso a API do Hermes ainda esteja inicializando)
       const [profilesList, setProfilesList] = useState([
-        { id: 'default', displayName: 'Hermes Agent', shortName: 'Hermes', roleDescription: 'Assistente Principal', roleColor: '#38bdf8', defaultPetId: 'rimuru-2', model: 'default' }
+        { id: 'default', displayName: 'Hermes Agent', shortName: 'Hermes', roleDescription: t('primaryAssistant'), roleColor: '#38bdf8', defaultPetId: 'rimuru-2', model: 'default' }
       ]);
 
       const [selectedProfileId, setSelectedProfileId] = useState(() => storage.get('last_profile', 'default'));
@@ -731,8 +753,8 @@ export default {
         if (saved) return saved;
         return {
           'default': {
-            userPrompt: 'Olá! Como funciona o escritório virtual?',
-            agentResponse: 'Olá! O Saphira Office detecta automaticamente todos os perfis e agentes configurados no seu Hermes Desktop, permitindo interagir, acompanhar status e gerenciar tarefas diretamente nesta interface animada.',
+            userPrompt: t('defaultPrompt'),
+            agentResponse: t('defaultResponse'),
             timestamp: '12:00',
             status: 'completed',
             model: 'default'
@@ -917,10 +939,18 @@ export default {
             text: textToSend
           };
 
+          let chatSubmitted = false;
           if (host?.composer?.submit) {
-            try { host.composer.submit(canonicalSessionId, textToSend); } catch {}
+            try {
+              const cRes = await host.composer.submit(canonicalSessionId, textToSend);
+              if (cRes && (cRes === true || cRes.ok !== false)) {
+                chatSubmitted = true;
+              }
+            } catch {}
           }
-          await requestForBot(targetProfile, 'prompt.submit', promptPayload);
+          if (!chatSubmitted) {
+            await requestForBot(targetProfile, 'prompt.submit', promptPayload);
+          }
 
           const updatedTurns = {
             ...lastTurnByProfile,
@@ -1240,23 +1270,19 @@ export default {
       };
 
       // Roteamento Estrito para a conversa do perfil
-      const openProfileChat = (profileId) => {
-        storage.set('last_profile', profileId);
+            const openProfileChat = (profileId) => {
         setSelectedProfileId(profileId);
 
         try {
-          if (host?.router?.navigate) {
-            host.router.navigate('/chat', {
-              profileId,
-              source: 'plugin:saphira-office:profile:' + profileId
-            });
-          } else if (window.hermes?.chat?.openSession) {
-            window.hermes.chat.openSession({ profileId });
-          } else {
-            const ev = new CustomEvent('hermes:open-chat', {
-              detail: { profileId, source: 'plugin:saphira-office' }
-            });
-            if (typeof window !== 'undefined') window.dispatchEvent(ev);
+          if (typeof host?.navigate === 'function') {
+            const activeSid = activeSessionByProfile[profileId];
+            if (activeSid) {
+              host.navigate('/chat/' + encodeURIComponent(activeSid));
+            } else {
+              host.navigate('/chat?profile=' + encodeURIComponent(profileId));
+            }
+          } else if (typeof host?.openSession === 'function') {
+            host.openSession(profileId);
           }
         } catch {}
       };
@@ -1596,15 +1622,21 @@ export default {
             text: textToSend
           };
 
-          // Se composer do Hermes estiver aberto na tela, também sincroniza
+          // Envio unificado: utiliza host.composer.submit se disponível; caso contrário, envia via prompt.submit RPC
+          let cmdSubmitted = false;
           if (host?.composer?.submit) {
-            try { host.composer.submit(canonicalSessionId, textToSend); } catch {}
+            try {
+              const cRes = await host.composer.submit(canonicalSessionId, textToSend);
+              if (cRes && (cRes === true || cRes.ok !== false)) {
+                cmdSubmitted = true;
+              }
+            } catch {}
+          }
+          if (!cmdSubmitted) {
+            await requestForBot(targetProfile, 'prompt.submit', promptPayload);
           }
 
-          // Envio oficial pelo Gateway RPC roteado
-          await requestForBot(targetProfile, 'prompt.submit', promptPayload);
-
-          setSendingStatus({ state: 'running', message: `${targetProfile.displayName} está processando no Hermes...` });
+          setSendingStatus({ state: 'running', message: t('processingStatus', { name: targetProfile.displayName }) });
           setCommandText('');
 
           // 4. Polling inteligente para capturar a resposta real via session.resume
@@ -1644,7 +1676,7 @@ export default {
                   return next;
                 });
 
-                setSendingStatus({ state: 'success', message: `Resposta recebida de ${targetProfile.displayName}! ✔` });
+                setSendingStatus({ state: 'success', message: t('responseReceivedStatus', { name: targetProfile.displayName }) });
                 setTimeout(() => setSendingStatus({ state: 'idle', message: '' }), 4000);
                 clearInterval(pollInterval);
                 return;
@@ -1861,7 +1893,7 @@ export default {
             // C) MONITOR COM BRILHO TECNOLÓGICO
             ctx.fillStyle = '#0f172a';
             ctx.fillRect(deskX - 22, deskY - 32, 44, 20);
-            const statusInfo = profile ? getProfileStatus(profile.id) : { color: '#64748b', text: 'Disponível', key: 'disponivel' };
+            const statusInfo = profile ? getProfileStatus(profile.id) : { color: '#64748b', text: t('statusAvailable'), key: 'disponivel' };
             ctx.fillStyle = statusInfo.color;
             ctx.fillRect(deskX - 20, deskY - 30, 40, 16);
 
@@ -1908,7 +1940,7 @@ export default {
               ctx.textAlign = 'center';
               ctx.textBaseline = 'middle';
               const dots = dotStep === 0 ? '● ○ ○' : dotStep === 1 ? '● ● ○' : '● ● ●';
-              ctx.fillText(dots + ' Executando', deskX, deskY - 50);
+              ctx.fillText(dots + ' ' + t('statusRunning'), deskX, deskY - 50);
               ctx.restore();
             }
 
@@ -2667,7 +2699,7 @@ export default {
                   },
                   children: [
                     jsx('span', { style: { fontSize: '11px', color: '#64748b' }, children: `Posto ${idx + 1}` }),
-                    jsx('span', { style: { fontSize: '9px', color: '#475569' }, children: 'Disponível' })
+                    jsx('span', { style: { fontSize: '9px', color: '#475569' }, children: t('statusAvailable') })
                   ]
                 });
               }
@@ -3498,7 +3530,7 @@ export default {
                         }),
 
                         // Pets Locais
-                        jsx('span', { style: { fontSize: '11px', fontWeight: 'bold', color: '#94a3b8' }, children: 'Escolha um Personagem Disponível:' }),
+                        jsx('span', { style: { fontSize: '11px', fontWeight: 'bold', color: '#94a3b8' }, children: t('avatarSelectionLabel') }),
                         jsx('div', {
                           style: {
                             display: 'flex',
@@ -4386,14 +4418,14 @@ export default {
       {
         area: PALETTE_AREA,
         id: 'open-saphira-office',
-        label: 'Abrir Saphira Office',
+        label: 'Open Saphira Office',
         data: {
           id: 'open-saphira-office',
-          label: 'Abrir Saphira Office'
+          label: 'Open Saphira Office'
         },
         action: () => {
-          if (host?.router?.navigate) {
-            host.router.navigate('/saphira-office');
+          if (typeof host?.navigate === 'function') {
+            host.navigate('/saphira-office');
           }
         }
       }
