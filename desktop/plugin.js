@@ -331,6 +331,42 @@ export default {
       }
     } catch {}
 
+    // ── RESOLUÇÃO E DICIONÁRIO DE IDIOMA GLOBAL (i18n) NO ESCOPO DO MÓDULO ──
+    function resolveGlobalLocale() {
+      try {
+        const selected = storage.get('ui_language', 'auto');
+        if (selected && selected !== 'auto') {
+          return selected === 'pt-BR' || selected.startsWith('pt') ? 'pt-BR' : 'en';
+        }
+      } catch {}
+      try {
+        if (ctx.i18n?.locale) {
+          return ctx.i18n.locale.toLowerCase().startsWith('pt') ? 'pt-BR' : 'en';
+        }
+        if (typeof ctx.i18n?.getLocale === 'function') {
+          const l = (ctx.i18n.getLocale() || '').toLowerCase();
+          if (l.startsWith('pt')) return 'pt-BR';
+        }
+      } catch {}
+      try {
+        if (typeof navigator !== 'undefined' && navigator.language) {
+          if (navigator.language.toLowerCase().startsWith('pt')) return 'pt-BR';
+        }
+      } catch {}
+      return 'en';
+    }
+
+    function t(key, params = {}) {
+      const locale = resolveGlobalLocale();
+      let str = I18N_DICTIONARY[locale]?.[key] || I18N_DICTIONARY['en']?.[key] || key;
+      if (params && typeof params === 'object') {
+        for (const [k, v] of Object.entries(params)) {
+          str = str.replace(new RegExp('\\{' + k + '\\}', 'g'), v);
+        }
+      }
+      return str;
+    }
+
     const imageCache = new Map();
     const thumbnailMemoryCache = new Map();
     let LIVE_AVAILABLE_PETS = PETDEX_CATALOG;
@@ -554,7 +590,7 @@ export default {
     // Renderizador de Conteúdo Dinâmico e Nítido do Kanban sobre a Tela
     // TAMPA O INTERIOR DO MONITOR/LOUSA PARA DEIXAR APENAS A MOLDURA EXTERNA VISÍVEL
     // E PROJETA OS DADOS REAIS CENTRALIZADOS COM ALTA NITIDEZ
-    function drawKanbanBoardContent(ctx, kx, ky, kanbanItem, profilesList, getProfileStatus) {
+    function drawKanbanBoardContent(ctx, kx, ky, kanbanItem, profilesList, getProfileStatus, tFn) {
       const isLousa = kanbanItem === 'lousa_tarefas';
       const screenW = isLousa ? 180 : 218;
       const screenH = isLousa ? 98 : 106;
@@ -680,7 +716,8 @@ export default {
       ctx.fillText('Roteamento OK', cardX3 + 5, colY + 24);
       ctx.fillStyle = '#6ee7b7';
       ctx.font = '6.5px sans-serif';
-      ctx.fillText(t('liveSessions'), cardX3 + 5, colY + 33);
+      const tTranslate = typeof tFn === 'function' ? tFn : (typeof t === 'function' ? t : (k => k === 'liveSessions' ? 'Live Sessions' : k));
+      ctx.fillText(tTranslate('liveSessions'), cardX3 + 5, colY + 33);
 
       ctx.restore();
     }
@@ -1798,18 +1835,19 @@ export default {
         let tick = 0;
 
         const render = () => {
-          tick++;
-          const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
-          if (canvas.width !== 960 * dpr || canvas.height !== 540 * dpr) {
-            canvas.width = 960 * dpr;
-            canvas.height = 540 * dpr;
-            canvas.style.width = '100%';
-            canvas.style.height = '100%';
-          }
+          try {
+            tick++;
+            const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+            if (canvas.width !== 960 * dpr || canvas.height !== 540 * dpr) {
+              canvas.width = 960 * dpr;
+              canvas.height = 540 * dpr;
+              canvas.style.width = '100%';
+              canvas.style.height = '100%';
+            }
 
-          ctx.save();
-          ctx.scale(dpr, dpr);
-          ctx.clearRect(0, 0, 960, 540);
+            ctx.save();
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, 960, 540);
 
           // ══════════════════════════════════════════════════════════════
           // CAMADA 1: CENÁRIO DE FUNDO / PAREDE E PISO PERSPECTIVADO
@@ -1843,7 +1881,7 @@ export default {
           drawSprite(ctx, kanbanItem, kanbanX, kanbanY, 0.74);
 
           // C) Conteúdo Legível do Kanban (A Fazer, Em Curso, Concluído)
-          drawKanbanBoardContent(ctx, kanbanX, kanbanY, kanbanItem, profilesList, getProfileStatus);
+          drawKanbanBoardContent(ctx, kanbanX, kanbanY, kanbanItem, profilesList, getProfileStatus, t);
 
           // ══════════════════════════════════════════════════════════════
           // CAMADA 3: MÓVEIS DE CHÃO DE FUNDO
@@ -2244,7 +2282,11 @@ export default {
           });
 
           ctx.restore();
-          animId = requestAnimationFrame(render);
+          } catch (renderErr) {
+            console.error('[SaphiraOffice] Canvas render error:', renderErr);
+          } finally {
+            animId = requestAnimationFrame(render);
+          }
         };
 
         animId = requestAnimationFrame(render);
